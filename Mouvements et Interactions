@@ -1,0 +1,65 @@
+
+# Mouvements et Interactions
+
+import matplotlib.pyplot as plt
+import csv
+
+#Pour lire un fichier csv
+
+def readColCSV(fichier,sep,n) :
+	file=open(fichier, "r")
+	reader=csv.reader(file,delimiter=sep)
+	col=[]
+	for row in reader :
+		if(row[n][0].isdigit()) :
+		notation_point=row [n].replace(",",".")
+		col.append(float(notation_point))
+return col 
+
+#Création de vos variables
+
+ fichier=input("Quel fichier souhaitez vous traiter ?")+".csv"
+
+#Création des varibles
+
+t=readColCSV(fichier,";",0)
+x=readColCSV(fichier,";",1)
+y=readColCSV(fichier,";",2)
+
+#Il vous faut maintenant calculer les coordonnées de la vitesse instantanée Vx et Vy 
+Vx=[]
+for i in range(len(x) – 1) :
+	Vx=Vx+[(x[i+1] - x[i])/(t[i+1]-t[i])] #Cette ligne est à completer par l'élève
+
+Vy=[]
+for i in range(len(y) – 1) :
+	Vy=Vy+[(y[i+1] – y[i])/(t[i+1]-t[i])] #Cette ligne est à completer par l'élève
+
+
+#Il vous faut maintenant calculer les coordonnées de l’accélération instantanée Ax et Ay 
+
+Ay=[]
+for i in range(len(Vy) – 1) :
+	Ay=Ay+[(Vy[i+1] – Vy[i])/(t[i+1]-t[i]) #Cette ligne est à completer par l'élève
+
+Ay=[]
+for i in range(len(Vy) – 1) :
+	Ay=Ay+[(Vy[i+1] – Vy[i])/(t[i+1]-t[i])] #Cette ligne est à completer par l'élève
+
+#Il vous faut maintenant tracer l’évolution de la position au cours du temps ainsi que les vecteurs accélération associés à chaque points
+
+for i in range(len(t) – 1) :
+	plt.plot(0,0,x[i],y[i], ’ro’)
+	if i <len(t)-2 :
+		plt.arrow(x[i+1],y[i+1],Ax[i]*0.1,Ay[i]*0.1, color=’b’ ,head_width=0.1, head_lenght=0.10, length_includes_head=true)
+		plt.text(x[i+1]+0.05,y[i+1]-0.15, »$ \overrightarrow{a}_{ %,i}$ »%(i+2),color= »blue »)
+
+#Légende
+
+plt.text(1.5,0.55, "Echelle : 5 $\mathrm{m\cdot s^{-2}}$", color= "blue")
+plt.plot([2,2],[0,0.5],"_-",color="blue")
+plt.grid()
+plt.title("Accélération instantanée et position en fonction du temps")
+plt.xlabel("x (m)")
+plt.ylabel("y (m)")
+plt.show()
